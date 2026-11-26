@@ -1,0 +1,58 @@
+name: Export self-contained HTML previews
+on:
+  push:
+    branches: [offline-preview-export]
+permissions:
+  contents: read
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: company
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: orange-lee-tech/your-first-homepages
+          ref: 0b80402f364a6c28b2fe05a98d37314d0c6d58b5
+          path: home
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Build both websites
+        shell: bash
+        run: |
+          (cd company && npm ci && npm run build) &
+          company_pid=$!
+          (
+            cd home
+            npm install
+            PORT=8910 npm run preview > /tmp/home-preview.log 2>&1 &
+            home_pid=$!
+            trap 'kill "$home_pid" 2>/dev/null || true; cat /tmp/home-preview.log' EXIT
+            for attempt in {1..120}; do
+              if curl -fsS http://127.0.0.1:8910/ -o /dev/null; then
+                test -s out/index.html
+                exit 0
+              fi
+              kill -0 "$home_pid" 2>/dev/null || exit 1
+              sleep 1
+            done
+            exit 1
+          )
+          wait "$company_pid"
+      - name: Open build and verify offline files
+        shell: bash
+        run: |
+          (cd company && npx playwright install --with-deps chromium)
+          mkdir -p offline-input output
+          ln -s ../company/out offline-input/company
+          ln -s ../home/out offline-input/home
+          NODE_PATH="$PWD/company/node_modules" node company/scripts/export-offline-previews.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: standalone-html-previews
+          path: output/*.html
+          if-no-files-found: error
