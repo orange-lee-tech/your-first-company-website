@@ -1,0 +1,123 @@
+import Breadcrumb from "@/components/Common/Breadcrumb";
+import { contentRepository } from "@/content/repository";
+import { buildPageMetadata } from "@/lib/seo";
+import Image from "next/image";
+import Link from "next/link";
+
+export const metadata = buildPageMetadata({
+  title: "师资 | 远岚教育工作室",
+  description:
+    "远岚教育工作室导师与教研团队总览，展示老师照片、姓名、学校或机构名称及职称。",
+  path: "/teachers",
+});
+
+const teacherCardTones = [
+  {
+    card: "border-primary/10 bg-primary/5 hover:border-primary/40 hover:bg-white dark:border-white/10 dark:bg-white/5 dark:hover:bg-gray-dark",
+    image: "from-[#EEF3FF] to-white dark:from-white/10 dark:to-bg-color-dark",
+    badge: "bg-primary/10 text-primary",
+  },
+  {
+    card: "border-yellow/20 bg-yellow/5 hover:border-yellow/50 hover:bg-white dark:border-yellow/20 dark:bg-white/10 dark:hover:bg-gray-dark",
+    image: "from-[#FFFBEB] to-white dark:from-yellow/10 dark:to-bg-color-dark",
+    badge: "bg-yellow/20 text-primary dark:text-yellow",
+  },
+];
+
+const TeachersPage = async () => {
+  const teachers = await contentRepository.listTeachers();
+
+  return (
+    <>
+      <Breadcrumb
+        pageName="师资"
+        description="远岚教育工作室汇聚多领域导师与教研团队，围绕升学规划、申请材料、面试训练与就业辅导提供支持。"
+      />
+
+      <section className="bg-white py-14 dark:bg-gray-dark md:py-16 lg:py-20">
+        <div className="container">
+          <div className="mb-10 max-w-[860px]">
+            <p className="mb-4 text-base font-semibold text-primary">
+              导师团队
+            </p>
+
+            <h1 className="mb-6 text-3xl font-bold leading-tight text-black dark:text-white md:text-4xl">
+              覆盖升学规划、申请辅导与就业支持的导师资源
+            </h1>
+
+            <p className="text-base leading-relaxed text-body-color dark:text-body-color-dark md:text-lg">
+              不同导师擅长的方向与项目经验各有侧重，远岚会结合学生阶段、目标方向和当前短板进行服务匹配。
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {teachers.map((teacher, index) => {
+              const canOpenDetail = teacher.hasDetail && teacher.detailPath;
+              const tone = teacherCardTones[index % teacherCardTones.length];
+
+              const card = (
+                <article className={`group h-full overflow-hidden rounded-2xl border shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-three ${tone.card}`}>
+                  <div className={`relative flex h-[300px] w-full items-end justify-center overflow-hidden bg-linear-to-b px-6 pt-6 md:h-[320px] ${tone.image}`}>
+                    <Image
+                      src={teacher.portraitImage}
+                      alt={teacher.name}
+                      fill
+                      sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-contain object-bottom transition duration-500 group-hover:scale-105"
+                    />
+                  </div>
+
+                  <div className="p-6">
+                    <div className="mb-3 flex items-start justify-between gap-3">
+                      <h2 className="text-2xl font-bold text-black transition group-hover:text-primary dark:text-white">
+                        {teacher.name}
+                      </h2>
+
+                      {canOpenDetail && (
+                        <span className={`shrink-0 rounded-full px-3 py-1 text-xs font-semibold ${tone.badge}`}>
+                          详情
+                        </span>
+                      )}
+                    </div>
+
+                    <p className="mb-3 text-base font-semibold text-primary">
+                      {teacher.title}
+                    </p>
+
+                    <p className="text-base leading-relaxed text-body-color dark:text-body-color-dark">
+                      {teacher.school}
+                    </p>
+
+                    {teacher.summary && (
+                      <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-body-color dark:text-body-color-dark">
+                        {teacher.summary}
+                      </p>
+                    )}
+
+                    {canOpenDetail && (
+                      <p className="mt-5 text-sm font-semibold text-primary transition group-hover:translate-x-1">
+                        查看个人主页 →
+                      </p>
+                    )}
+                  </div>
+                </article>
+              );
+
+              if (canOpenDetail) {
+                return (
+                  <Link key={teacher.id} href={teacher.detailPath!}>
+                    {card}
+                  </Link>
+                );
+              }
+
+              return <div key={teacher.id}>{card}</div>;
+            })}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
+export default TeachersPage;

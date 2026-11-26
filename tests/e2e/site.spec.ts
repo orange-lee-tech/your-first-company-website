@@ -1,0 +1,20 @@
+import { expect, test } from "@playwright/test";
+
+test("示例服务、目录与案例可访问", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.getByRole("heading", { name: "把下一步想清楚" })).toBeVisible();
+  await page.getByRole("link", { name: "浏览服务", exact: true }).click();
+  await page.goto("/services/baoyan/");
+  await expect(page.getByRole("heading", { name: "升学规划服务" })).toBeVisible();
+  await page.getByRole("complementary", { name: "服务页目录" }).getByRole("link", { name: "服务流程" }).click();
+  await expect(page).toHaveURL(/#service-part-4$/);
+  await page.goto("/cases/baoyan/");
+  await expect(page.getByText("升学规划 · 虚构示例", { exact: true }).first()).toBeVisible();
+});
+
+test("示例咨询流程无需外部服务", async ({ page }) => {
+  await page.goto("/demo-form.html");
+  await page.selectOption("#topic", "材料准备");
+  await page.getByRole("button", { name: "预览确认" }).click();
+  await expect(page.getByText("演示完成。已选方向：材料准备。")).toBeVisible();
+});

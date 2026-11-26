@@ -1,0 +1,5 @@
+<!doctype html>
+<html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>咨询流程演示</title>
+<style>body{margin:0;padding:2rem;font:1rem/1.6 system-ui;background:#f2f5f1;color:#173431}main{max-width:36rem;margin:auto}label,select,button{display:block;margin:1rem 0}button,select{font:inherit;padding:.6rem}button{background:#173431;color:white;border:0;cursor:pointer}</style>
+<main><h1>体验咨询流程</h1><p>请选择一个示例方向。页面不会收集、保存或发送任何资料。</p><label for="topic">咨询方向</label><select id="topic"><option>规划方向</option><option>材料准备</option><option>沟通复盘</option></select><button type="button" id="preview">预览确认</button><p id="result" aria-live="polite"></p></main>
+<script>document.querySelector('#preview').addEventListener('click',()=>{document.querySelector('#result').textContent='演示完成。已选方向：'+document.querySelector('#topic').value+'。';});</script></html>
