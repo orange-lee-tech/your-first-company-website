@@ -45,9 +45,23 @@
 .association-page-intro { padding-block: 4rem 3rem; color: #fbf6e8; background: #193d34; }
 .association-page-intro h1 { font-size: clamp(2.1rem, 5vw, 3.7rem); font-weight: 740; }
 .association-page-intro p { max-width: 44rem; margin-top: .7rem; line-height: 1.8; }
-.association-footer { background: #102b26; color: #f7f5e8; padding-block: 2rem; }
-.association-footer nav { display: flex; flex-wrap: wrap; justify-content: end; gap: 1.25rem; }
-.association-footer a:hover { text-decoration: underline; }
+/* Association footer uses the original template's main, social, and legal rows. */
+.association-footer { background: #102b26; color: #f7f5e8; padding-block: clamp(2.7rem, 5vw, 5rem) 1.4rem; }
+.association-footer h2 { margin-bottom: .95rem; font-size: 1.12rem; font-weight: 730; }
+.association-footer p { color: #e0e5dc; line-height: 1.7; }
+.association-footer a:hover { color: #f1cb94; text-decoration: underline; text-underline-offset: .25em; }
+.association-footer-main { display: grid; grid-template-columns: 1.45fr .7fr .8fr 1fr; gap: clamp(1.35rem, 3.2vw, 3.7rem); padding-bottom: 2.4rem; }
+.association-footer-brand { display: inline-block; margin-bottom: .7rem; font-family: "Songti SC", "Noto Serif CJK SC", serif; font-size: clamp(1.25rem, 2.3vw, 1.65rem); font-weight: 750; }
+.association-footer-main nav ul { display: grid; gap: .5rem; list-style: none; }
+.association-footer-mission { display: grid; gap: .3rem; margin-top: 1.2rem; padding: .8rem .9rem; border-left: 2px solid #edc998; background: #1c3c34; }
+.association-footer-mission span { color: #f1cb94; font-size: .8rem; }
+.association-footer-cta { display: inline-block; margin-top: .95rem; color: #f1cb94; font-weight: 650; }
+.association-footer-social { display: grid; align-items: start; grid-template-columns: 1fr 2fr; gap: 1.5rem; padding-block: 2rem; border-block: 1px solid #ffffff27; }
+.association-footer-social ul { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: .8rem; list-style: none; }
+.association-footer-social li { display: grid; justify-items: center; gap: .65rem; min-width: 0; padding: .85rem .4rem; border: 1px solid #ffffff2c; background: #17372f; }
+.association-footer-social h3 { font-size: clamp(.75rem, 1.5vw, .94rem); font-weight: 650; }
+.association-footer-qr { display: grid; place-content: center; width: min(100%, 4.75rem); aspect-ratio: 1; background: #eeead9; border: 4px double #487463; text-align: center; color: #234639; font-size: .68rem; line-height: 1.1; }
+.association-footer-legal { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; padding-top: 1.1rem; font-size: .82rem; }
 .association-header :focus-visible, .association-main :focus-visible, .association-footer :focus-visible { outline: 2px solid #c5873f; outline-offset: 4px; }
 
 @media (max-width: 850px) {
@@ -55,14 +69,16 @@
   .association-bar { align-items: start; flex-direction: column; gap: .35rem; padding-block: .65rem; }
   .association-nav { width: 100%; flex-wrap: wrap; column-gap: 1rem; row-gap: .2rem; }
   .association-departments { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .association-footer-main { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 560px) {
   .association-nav { font-size: .82rem; column-gap: .9rem; }
   .association-hero { min-height: 68svh; }
   .association-hero::after { background: linear-gradient(0deg,#0a211eef 10%,#0a211e63 76%); }
   .association-work, .association-split { grid-template-columns: 1fr; }
-  .association-footer nav { justify-content: start; }
+  .association-footer-social { grid-template-columns: 1fr; }
 }
 @media (max-width: 410px) {
   .association-departments { grid-template-columns: 1fr; }
+  .association-footer-main > section { grid-column: 1 / -1; }
 }

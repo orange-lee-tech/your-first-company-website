@@ -47,9 +47,18 @@ test("单文件预览断网时也能查看五张开屏大图和四个部门", as
     await expect(site.getByRole("heading", { name, exact: true })).toBeVisible();
     await expect(hero).toHaveCSS("background-image", /data:image/);
     images.add(await hero.evaluate((element) => getComputedStyle(element).backgroundImage));
-    await site.getByRole("link", { name: "首页", exact: true }).click();
+    await site.getByRole("navigation", { name: "全站导航" }).getByRole("link", { name: "首页", exact: true }).click();
   }
   expect(images.size).toBe(5);
+  const footer = site.getByRole("contentinfo");
+  for (const heading of ["快速导航", "协会部门", "联系与参与", "关注协会"]) {
+    await expect(footer.getByRole("heading", { name: heading })).toBeVisible();
+  }
+  await expect(footer.locator(".association-footer-qr")).toHaveCount(3);
+  await footer.getByRole("navigation", { name: "协会部门", exact: true }).getByRole("link", { name: "技术部" }).click();
+  await expect(site.getByRole("heading", { name: "技术部", exact: true })).toBeVisible();
+  await footer.getByRole("link", { name: "首页", exact: true }).click();
+  await expect(site.getByRole("heading", { name: "中南大学人工智能协会", exact: true })).toBeVisible();
   await page.setViewportSize({ width: 390, height: 844 });
   const nav = site.getByRole("navigation", { name: "全站导航" });
   await nav.locator("summary").click();
