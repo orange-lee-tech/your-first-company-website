@@ -137,7 +137,7 @@ async function pack(browser, kind, output, title) {
  for(const route of routes){
   const key=route.split('?')[0];
   console.log(kind,route);
-  await page.goto(origin+route,{waitUntil:'networkidle'});
+  await page.goto(origin+route,{waitUntil:'load',timeout:12000});
   if(homepage) {
    try { await page.locator(ready[key]).first().waitFor({state:'attached',timeout:4000}); }
    catch (error) {
@@ -205,7 +205,11 @@ async function pack(browser, kind, output, title) {
  }
  const payload=gzipSync(JSON.stringify({pages,styles})).toString('base64');
  writeFileSync(output,'<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+title+'</title><style>'+wrapperCss+'</style><div id="status" role="status">正在打开预览…</div><iframe title="'+title+'" sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe><script id="archive" type="application/octet-stream">'+payload+'</script><script>'+runtime+'</script></html>');
+ await context.close();http.close();
+}
+async function verify(browser, homepage, output) {
  const offline=await browser.newContext({offline:true,viewport:{width:1440,height:960}});
+ offline.setDefaultTimeout(6500);
  const test=await offline.newPage();
  const errors=[];test.on('pageerror',e=>errors.push(e.message));
  await test.goto(pathToFileURL(path.resolve(output)).href);
@@ -231,10 +235,10 @@ async function pack(browser, kind, output, title) {
  assert.deepEqual(errors,[]);
  await offline.close();
  console.log('Verified local file with networking disabled:',output);
- await context.close();http.close();
 }
 (async()=>{
  const b=await chromium.launch({args:['--no-sandbox']});
- try{ await pack(b,'home','output/homepage-preview.html','个人主页 · 离线预览'); await pack(b,'company','output/company-website-preview.html','企业官网 · 离线预览'); }
+ try{ await pack(b,'home','output/homepage-preview.html','个人主页 · 离线预览'); await pack(b,'company','output/company-website-preview.html','企业官网 · 离线预览');
+ await verify(b,true,'output/homepage-preview.html'); await verify(b,false,'output/company-website-preview.html'); }
  finally{await b.close();}
 })().catch(e=>{console.error(e);process.exit(1)});
