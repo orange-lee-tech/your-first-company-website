@@ -10,6 +10,10 @@
 
 设置 `NEXT_PUBLIC_SITE_URL` 为你的完整域名后重新构建。将 `out/` 交给静态站点服务器。Nginx 站点可用 `try_files $uri $uri/ =404;`，并设 `index index.html;`。使用域名根目录部署时留空 `NEXT_PUBLIC_SITE_BASE_PATH`。
 
+### 下载已构建的预览
+
+登录 GitHub，打开 [Actions](../../actions/workflows/verify.yml)，选择一次成功的运行，在底部 **Artifacts** 下载 `company-website-preview`。也可在该工作流页面点击 **Run workflow** 重新构建。ZIP 解压后，在包含 `index.html` 的目录运行 `npx --yes http-server . -a 127.0.0.1 -p 8080`，然后打开 `http://127.0.0.1:8080/`。
+
 | 模块 | 内容或界面入口 |
 | --- | --- |
 | 企业品牌、联系方式与 SEO | `src/data/about.ts`、`src/data/contactInfo.ts`、`src/lib/seo.ts` |
