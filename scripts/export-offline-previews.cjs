@@ -130,13 +130,21 @@ async function pack(browser, kind, output, title) {
  const context=await browser.newContext({viewport:{width:1440,height:960}});
  await context.route('**/*',route=>route.request().url().startsWith(origin+'/')?route.continue():route.abort());
  const page=await context.newPage();
+ page.on('pageerror',e=>console.log('Render error:',e.message));
+ page.on('console',msg=>{if(msg.type()==='error')console.log(msg.text().slice(0,350));});
  const pages={},styles={};
- const ready={'/':'#archive-portals .portal-card','/projects.html':'#projects-filters button','/learning.html':'#research-list article','/capabilities.html':'#capability-list article','/updates.html':'.update-post-card','/post.html':'#post-body p'};
+ const ready={'/':'#archive-portals .portal-card','/projects.html':'#projects-filters button','/learning.html':'#knowledge-grid > *','/capabilities.html':'#capability-list article','/updates.html':'.update-post-card','/post.html':'#post-body p'};
  for(const route of routes){
   const key=route.split('?')[0];
   console.log(kind,route);
   await page.goto(origin+route,{waitUntil:'networkidle'});
-  if(homepage)await page.locator(ready[key]).first().waitFor({timeout:10000});
+  if(homepage) {
+   try { await page.locator(ready[key]).first().waitFor({state:'attached',timeout:4000}); }
+   catch (error) {
+    console.log('Page state',route,await page.locator('.subpage-status,.archive-state').allTextContents());
+    if(key === '/') throw error;
+   }
+  }
   const raw=await page.evaluate(({keys,homepage,key})=>{
    const root=document.documentElement.cloneNode(true);
    root.querySelectorAll('script, noscript, iframe, next-route-announcer, [srcset]').forEach(e=>e.hasAttribute('srcset')?e.removeAttribute('srcset'):e.remove());
@@ -204,15 +212,15 @@ async function pack(browser, kind, output, title) {
  const pane=test.frameLocator('iframe');
  if(homepage){
   await pane.getByRole('heading',{name:'林屿',exact:true}).waitFor({timeout:10000});
-  await pane.locator('a[data-offline-route="/projects.html"]').first().click();
+  await pane.locator('a[data-offline-route="/projects.html"]:visible').first().click();
   await pane.getByRole('heading',{name:'雨水花园观测仪'}).first().waitFor({timeout:10000});
-  await pane.locator('a[data-offline-route="/updates.html"]').first().click();
+  await pane.locator('a[data-offline-route="/updates.html"]:visible').first().click();
   await pane.getByText('从空白到第一张观测图',{exact:true}).first().click();
   await pane.locator('#post-body').getByText('先写下要回答的问题',{exact:false}).waitFor({timeout:10000});
  }else{
   await pane.getByRole('heading',{name:'把下一步想清楚',exact:true}).waitFor({timeout:10000});
   await pane.getByRole('link',{name:'浏览服务',exact:true}).click();
-  await pane.locator('a[data-offline-route="/services/baoyan/"]').first().click();
+  await pane.locator('a[data-offline-route="/services/baoyan/"]:visible').first().click();
   await pane.getByRole('heading',{name:'升学规划服务',exact:true}).waitFor({timeout:10000});
   const formUrl=pathToFileURL(path.resolve(output));formUrl.hash='/demo-form.html';
   await test.goto(formUrl.href);
