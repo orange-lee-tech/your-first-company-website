@@ -35,8 +35,22 @@ jobs:
           done
           exit 1
       - run: npm run verify:export
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install lxml
+      - run: python scripts/build-offline-preview.py
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e
+        env:
+          TEST_OFFLINE_PREVIEW: "1"
+      - name: Upload offline HTML
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: company-website-preview-offline
+          path: preview/company-website-preview.html
+          if-no-files-found: error
       - name: Upload HTML preview ZIP
         if: github.event_name != 'pull_request'
         uses: actions/upload-artifact@v4

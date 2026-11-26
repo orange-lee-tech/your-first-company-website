@@ -10,9 +10,11 @@
 
 设置 `NEXT_PUBLIC_SITE_URL` 为你的完整域名后重新构建。将 `out/` 交给静态站点服务器。Nginx 站点可用 `try_files $uri $uri/ =404;`，并设 `index index.html;`。使用域名根目录部署时留空 `NEXT_PUBLIC_SITE_BASE_PATH`。
 
-### 下载已构建的预览
+### 双击打开单文件预览
 
-登录 GitHub，打开 [Actions](../../actions/workflows/verify.yml)，选择一次成功的运行，在底部 **Artifacts** 下载 `company-website-preview`。也可在该工作流页面点击 **Run workflow** 重新构建。ZIP 解压后，在包含 `index.html` 的目录运行 `npx.cmd --yes http-server . -a 127.0.0.1 -p 8080`（Windows PowerShell）或 `npx --yes http-server . -a 127.0.0.1 -p 8080`（macOS / Linux），然后打开 `http://127.0.0.1:8080/`。
+登录 GitHub，打开 [Actions](../../actions/workflows/verify.yml)，选一次成功的运行，或点击 **Run workflow** 构建。在该次运行底部的 **Artifacts** 下载 `company-website-preview-offline`。解压后打开里面唯一的 `company-website-preview.html`。用近期版本的 Edge 或 Chrome 即可，预览时无需安装 Node、开启本地服务或联网。
+
+如果正在修改源码，先运行 `npm run build` 生成 `out/`，再运行 `python -m pip install lxml` 和 `python scripts/build-offline-preview.py`，文件输出到 `preview/company-website-preview.html`。标准静态站点产物仍可从 `company-website-preview` 下载。
 
 | 模块 | 内容或界面入口 |
 | --- | --- |
