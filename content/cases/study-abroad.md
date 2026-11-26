@@ -2,10 +2,10 @@
 id: demo-study-abroad
 category: study-abroad
 title: 海外院校申请 · 虚构示例
-studentLabel: 学员示例
-initialSummary: 选校信息难以对比
-outcomeSummary: 完成院校与时间节点对照
-image: /images/demo/case.svg
+studentLabel: 做出第一张院校对照表
+initialSummary: 收藏了不少院校页面，费用、课程与材料期限散落在不同表格。
+outcomeSummary: 形成含先决课程、公开费用与期限的简表。
+image: /images/demo/demo-study-abroad.svg
 imageRatio: landscape
 featured: true
 displayOrder: 1
@@ -13,10 +13,10 @@ tags: [教学示例]
 ---
 
 ## 初始情况
-选校信息难以对比。
+收藏了不少院校页面，费用、课程与材料期限散落在不同表格。
 
 ## 服务过程
-把任务按时间和输出要求拆成清单，逐项复盘。
+统一公开信息的字段，保留来源链接和待核对项。
 
 ## 最终结果
-完成院校与时间节点对照。本案例为虚构示例。
+形成含先决课程、公开费用与期限的简表。

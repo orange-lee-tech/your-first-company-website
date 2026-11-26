@@ -120,7 +120,7 @@ const ServiceDetailPage = async ({
         description={detail.subtitle}
       />
 
-      <section className="bg-white py-12 dark:bg-gray-dark md:py-14 lg:py-18">
+      <section className="bg-[#f4f7f2] py-12 dark:bg-gray-dark md:py-14 lg:py-18">
         <div className="container">
           <div className="mb-12 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-start">
             <div className="lg:col-span-8">
@@ -133,7 +133,7 @@ const ServiceDetailPage = async ({
               </h1>
 
               <p className="text-base leading-relaxed text-body-color dark:text-body-color-dark md:text-lg">
-                以下内容用于帮助你快速判断服务是否匹配当前阶段，并了解远岚如何围绕目标、短板、周期和资源进行个性化规划。
+                {detail.customization}
               </p>
             </div>
 
@@ -211,7 +211,7 @@ const ServiceDetailPage = async ({
                 </h2>
 
                 <p className="max-w-[720px] text-base leading-relaxed text-white/80">
-                  你可以先提交当前阶段、目标方向与主要困惑，远岚规划老师将进行免费一对一初步评估。
+                  带上你最想确认的一个问题和目前已有的材料，从明确下一步开始。
                 </p>
               </div>
 

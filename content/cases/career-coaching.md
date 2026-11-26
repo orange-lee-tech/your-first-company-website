@@ -2,10 +2,10 @@
 id: demo-career-coaching
 category: career-coaching
 title: 就业准备 · 虚构示例
-studentLabel: 学员示例
-initialSummary: 简历只有职责，没有成果证据
-outcomeSummary: 完成项目描述和模拟面试复盘
-image: /images/demo/case.svg
+studentLabel: 把项目经历写进简历
+initialSummary: 简历只罗列职责，无法展示本人做出的具体决定。
+outcomeSummary: 完成岗位版简历、项目证据提纲和待补材料表。
+image: /images/demo/demo-career-coaching.svg
 imageRatio: landscape
 featured: true
 displayOrder: 1
@@ -13,10 +13,10 @@ tags: [教学示例]
 ---
 
 ## 初始情况
-简历只有职责，没有成果证据。
+简历只罗列职责，无法展示本人做出的具体决定。
 
 ## 服务过程
-把任务按时间和输出要求拆成清单，逐项复盘。
+选取可公开的项目素材，用背景、行动和结果组织叙述。
 
 ## 最终结果
-完成项目描述和模拟面试复盘。本案例为虚构示例。
+完成岗位版简历、项目证据提纲和待补材料表。

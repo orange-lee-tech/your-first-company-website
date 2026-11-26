@@ -84,7 +84,7 @@ const CaseCategoryPage = async ({
         description={page.description}
       />
 
-      <section className="bg-white py-14 dark:bg-bg-color-dark md:py-16 lg:py-20">
+      <section className="bg-[#f3f6f0] py-14 dark:bg-bg-color-dark md:py-16 lg:py-20">
         <div className="container">
           <div className="mb-8 flex flex-wrap gap-3">
             {casePages.map((item) => {
@@ -116,7 +116,7 @@ const CaseCategoryPage = async ({
             </h1>
 
             <p className="text-base leading-relaxed text-body-color dark:text-body-color-dark md:text-lg">
-              下面按案例卡片展示初始情况、关键材料和最终结果，帮助你快速对照自己的阶段、目标与申请路径。
+              以下为虚构的教学案例。每张卡片说明初始问题、工作记录和可检查的交付物。
             </p>
           </div>
 
