@@ -201,6 +201,17 @@ const CaseCategoryPage = async ({
                         </div>
                       )}
 
+                      {item.service && (
+                        <div className={`rounded-xl p-5 ${tone.panel}`}>
+                          <h3 className="mb-2 text-base font-bold text-black dark:text-white">
+                            实施过程
+                          </h3>
+                          <p className="text-base leading-relaxed text-body-color dark:text-body-color-dark">
+                            {item.service}
+                          </p>
+                        </div>
+                      )}
+
                       <div className="rounded-xl border-l-4 border-yellow bg-[#FFFBEB] p-5 dark:bg-white/5">
                         <h3 className="mb-2 text-base font-bold text-black dark:text-white">
                           最终结果
