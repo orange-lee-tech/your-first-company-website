@@ -1,15 +1,14 @@
-import { contactInfo } from "@/data/contactInfo";
+import { associationDescription, associationName, campusImage } from "@/data/association";
 import type { Metadata } from "next";
 
 export const siteConfig = {
   url: (process.env.NEXT_PUBLIC_SITE_URL || "https://example.com").replace(/\/+$/, ""),
-  name: "远岚教育工作室",
-  companyName: contactInfo.companyName,
-  defaultTitle: "远岚教育工作室 | 远岚教育工作室（演示）",
-  description:
-    "远岚教育工作室（演示）专注本硕博升学与就业陪跑服务，覆盖保研、海外本硕申请、国内申博、海外全奖博士、本科就业与高端就业。",
+  name: associationName,
+  companyName: associationName,
+  defaultTitle: associationName,
+  description: associationDescription,
   locale: "zh_CN",
-  socialImage: "/images/demo/hero.png",
+  socialImage: campusImage,
 } as const;
 
 export function absoluteUrl(path = "/") {
@@ -39,7 +38,7 @@ export function buildPageMetadata({
       images: [
         {
           url: siteConfig.socialImage,
-          alt: `${siteConfig.name}｜把下一步想清楚`,
+          alt: siteConfig.name,
         },
       ],
     },
@@ -56,10 +55,8 @@ export const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "@id": `${siteConfig.url}/#organization`,
-  name: contactInfo.companyName,
-  alternateName: contactInfo.brandName,
+  name: siteConfig.name,
   url: siteConfig.url,
-  email: contactInfo.email,
 
 };
 

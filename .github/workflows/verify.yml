@@ -24,7 +24,8 @@ jobs:
           for attempt in {1..120}; do
             if curl -fsS http://127.0.0.1:3100/ -o /tmp/template-home.html; then
               test -s out/index.html
-              grep -q '把下一步想清楚' /tmp/template-home.html
+              grep -q '中南大学人工智能协会' /tmp/template-home.html
+              curl -fsS http://127.0.0.1:3100/departments/technology/ -o /dev/null
               curl -fsS http://127.0.0.1:3100/services/baoyan/ -o /dev/null
               curl -fsS http://127.0.0.1:3100/demo-form.html -o /dev/null
               exit 0

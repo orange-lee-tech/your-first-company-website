@@ -3,6 +3,7 @@ import { join } from "node:path";
 
 const outDir = join(process.cwd(), "out");
 const siteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://example.com").replace(/\/+$/, "");
+const departmentSlugs = ["organization", "publicity", "technology", "external-relations"];
 const coreRoutes = [
   "/",
   "/about",
@@ -15,6 +16,11 @@ const coreRoutes = [
   "/teachers/lin-qiao",
   "/faq",
   "/contact",
+  "/join",
+  "/activities",
+  "/resources",
+  "/departments",
+  ...departmentSlugs.map((slug) => `/departments/${slug}`),
 ];
 const legacyRoutes = [
   "/signin",
@@ -124,6 +130,16 @@ if (!existsSync(outDir)) {
   assertIncludes("homepage WebSite JSON-LD", homeHtml, '"@type":"WebSite"');
   assertIncludes("homepage Open Graph", homeHtml, 'property="og:site_name"');
 
+  assertIncludes("association name", homeHtml, "中南大学人工智能协会");
+  assertIncludes("home cover", homeHtml, "/images/association/campus.jpg");
+  for (const slug of departmentSlugs) {
+    const route = `/departments/${slug}`;
+    const asset = slug === "organization" ? "/images/demo/hero.png" : `/images/association/${slug}.jpg`;
+    assertIncludes(`home links to ${route}`, homeHtml, route);
+    assertIncludes(`department cover ${slug}`, readPage(route), asset);
+    if (!existsSync(join(outDir, asset))) fail(`missing cover ${asset}`);
+  }
+
   const serviceHtml = readPage("/services/baoyan");
   assertIncludes("service Service JSON-LD", serviceHtml, '"@type":"Service"');
   assertIncludes("service breadcrumb JSON-LD", serviceHtml, '"@type":"BreadcrumbList"');
@@ -160,9 +176,10 @@ if (!existsSync(outDir)) {
   const sitemap = readFileSync(join(outDir, "sitemap.xml"), "utf8");
   for (const requiredUrl of [
     `${siteUrl}/`,
-    `${siteUrl}/services/baoyan`,
-    `${siteUrl}/cases/baoyan`,
-    `${siteUrl}/teachers/lin-qiao`,
+    `${siteUrl}/activities`,
+    `${siteUrl}/resources`,
+    `${siteUrl}/join`,
+    ...departmentSlugs.map((slug) => `${siteUrl}/departments/${slug}`),
   ]) {
     assertIncludes(`sitemap URL ${requiredUrl}`, sitemap, requiredUrl);
   }

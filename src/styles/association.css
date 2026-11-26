@@ -1,0 +1,68 @@
+.association-wrap { width: min(100% - 3rem, 82rem); margin-inline: auto; }
+.association-main { color: #17372f; background: #f6f5ed; }
+.association-header { position: sticky; top: 0; z-index: 50; color: #f7f5e8; background: #102b26; border-bottom: 1px solid #ffffff25; }
+.association-bar { min-height: 4.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; }
+.association-brand { display: inline-flex; align-items: center; gap: .7rem; font-weight: 750; white-space: nowrap; }
+.association-brand span { display: grid; place-items: center; min-width: 2.25rem; height: 2.25rem; border: 1px solid #ddb985; font-family: Georgia, serif; color: #f1c68c; }
+.association-nav { display: flex; align-items: center; gap: clamp(.65rem, 2vw, 1.85rem); font-size: .95rem; white-space: nowrap; }
+.association-nav a:hover, .association-nav summary:hover { color: #f1c68c; }
+.association-nav-departments { position: relative; }
+.association-nav-departments summary { cursor: pointer; padding-block: .65rem; }
+.association-nav-popover { position: absolute; inset: 100% auto auto -.75rem; min-width: 9rem; display: grid; padding: .45rem; background: #183e35; border: 1px solid #ffffff36; box-shadow: 0 16px 36px #0005; }
+.association-nav-popover a { padding: .6rem .85rem; }
+.association-nav > a:last-child { border: 1px solid #e3bf8b; padding: .45rem .65rem; }
+.association-hero { min-height: clamp(29rem, calc(90svh - 4.5rem), 62rem); position: relative; isolation: isolate; display: flex; align-items: end; background: #183a31; color: #fffdf3; }
+.association-hero-photo, .association-hero::after { position: absolute; inset: 0; z-index: -1; }
+.association-hero-photo { background-size: cover; background-position: center 53%; }
+.association-hero::after { content: ""; background: linear-gradient(80deg, #0a211ed9 0%, #0a211e81 52%, #0a211e14 100%), linear-gradient(0deg, #0b211bd6 0%, transparent 68%); }
+.association-hero-body { padding-block: clamp(4rem, 10vh, 8rem); }
+.association-kicker { color: #f6ca93; font-size: .9rem; letter-spacing: .16em; font-weight: 700; margin-bottom: .9rem; }
+.association-hero h1 { max-width: 13em; font-family: "Songti SC", "Noto Serif CJK SC", "SimSun", serif; font-weight: 750; font-size: clamp(2.45rem, 5.8vw, 6rem); line-height: 1.12; text-wrap: balance; }
+.association-hero-description { max-width: 36em; margin: 1.2rem 0 1.85rem; font-size: clamp(1rem, 1.7vw, 1.25rem); line-height: 1.8; color: #f6f3e8; }
+.association-actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+.association-actions a { padding: .7rem 1.2rem; border: 1px solid #f1e8d9ab; font-weight: 650; }
+.association-actions a:first-child { background: #edc998; color: #102b26; border-color: #edc998; }
+.association-actions a:hover { background: #fae5c6; color: #102b26; }
+.association-section { padding-block: clamp(3rem, 7vw, 6.5rem); scroll-margin-top: 7rem; }
+.association-section h2 { font-size: clamp(1.55rem, 3vw, 2.6rem); font-weight: 740; line-height: 1.2; }
+.association-lede { max-width: 43rem; margin-top: .75rem; line-height: 1.85; opacity: .91; }
+.association-departments { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.15rem; margin-top: 2rem; }
+.association-department { display: flex; flex-direction: column; border: 1px solid #d8dfd2; background: #fdfcf6; transition: border-color .2s, box-shadow .2s; }
+.association-department:hover { border-color: #69877b; box-shadow: 0 8px 20px #183b331b; }
+.association-department img { width: 100%; aspect-ratio: 16/10; object-fit: cover; }
+.association-department > div { display: grid; gap: .6rem; height: 100%; padding: 1rem; }
+.association-department h3, .association-work h3, .association-work h2 { font-size: 1.25rem; font-weight: 730; }
+.association-department p, .association-work p, .association-split p { line-height: 1.75; opacity: .9; }
+.association-department span { align-self: end; font-size: .88rem; font-weight: 700; color: #275b50; }
+.association-section-dark { background: #193d34; color: #fbf6e8; }
+.association-split { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: clamp(1.5rem, 4vw, 4rem); }
+.association-split p { margin-top: .7rem; }
+.association-section-dark a, .association-next a { display: inline-block; margin-top: 1.2rem; text-decoration: underline; text-underline-offset: .3em; }
+.association-section-dark a { color: #f2ce9a; }
+.association-work { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 1rem; margin-top: 2rem; }
+.association-work article { background: #fffff8; padding: 1.35rem; border: 1px solid #d8dfd2; border-top: 3px solid #6d8e80; }
+.association-work p { margin-top: .55rem; }
+.association-page-intro { padding-block: 4rem 3rem; color: #fbf6e8; background: #193d34; }
+.association-page-intro h1 { font-size: clamp(2.1rem, 5vw, 3.7rem); font-weight: 740; }
+.association-page-intro p { max-width: 44rem; margin-top: .7rem; line-height: 1.8; }
+.association-footer { background: #102b26; color: #f7f5e8; padding-block: 2rem; }
+.association-footer nav { display: flex; flex-wrap: wrap; justify-content: end; gap: 1.25rem; }
+.association-footer a:hover { text-decoration: underline; }
+.association-header :focus-visible, .association-main :focus-visible, .association-footer :focus-visible { outline: 2px solid #c5873f; outline-offset: 4px; }
+
+@media (max-width: 850px) {
+  .association-wrap { width: min(100% - 2rem, 82rem); }
+  .association-bar { align-items: start; flex-direction: column; gap: .35rem; padding-block: .65rem; }
+  .association-nav { width: 100%; flex-wrap: wrap; column-gap: 1rem; row-gap: .2rem; }
+  .association-departments { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (max-width: 560px) {
+  .association-nav { font-size: .82rem; column-gap: .9rem; }
+  .association-hero { min-height: 68svh; }
+  .association-hero::after { background: linear-gradient(0deg,#0a211eef 10%,#0a211e63 76%); }
+  .association-work, .association-split { grid-template-columns: 1fr; }
+  .association-footer nav { justify-content: start; }
+}
+@media (max-width: 410px) {
+  .association-departments { grid-template-columns: 1fr; }
+}

@@ -1,9 +1,20 @@
 import { expect, test } from "@playwright/test";
 
-test("示例服务、目录与案例可访问", async ({ page }) => {
+test("协会首页、部门菜单和部门开屏可访问", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "把下一步想清楚" })).toBeVisible();
-  await page.getByRole("link", { name: "浏览服务", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "中南大学人工智能协会", exact: true })).toBeVisible();
+  await expect(page.locator("#departments .association-department")).toHaveCount(4);
+  const menu = page.getByRole("navigation", { name: "全站导航" });
+  await menu.locator("summary").click();
+  await menu.getByRole("link", { name: "技术部", exact: true }).click();
+  await expect(page).toHaveURL(/departments\/technology\/?$/);
+  await expect(page.getByRole("heading", { name: "技术部", exact: true })).toBeVisible();
+  await expect(page.locator(".association-hero-photo")).toHaveCSS("background-image", /technology\.jpg/);
+  await page.getByRole("link", { name: "了解部门工作" }).click();
+  await expect(page).toHaveURL(/#work$/);
+});
+
+test("示例服务、目录与案例可访问", async ({ page }) => {
   await page.goto("/services/baoyan/");
   await expect(page.getByRole("heading", { name: "升学规划服务" })).toBeVisible();
   await page.getByRole("complementary", { name: "服务页目录" }).getByRole("link", { name: "服务流程" }).click();

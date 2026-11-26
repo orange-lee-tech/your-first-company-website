@@ -1,6 +1,6 @@
 # 你的第一个企业官网
 
-以虚构的「远岚教育工作室」为例，提供可组合的企业官网功能和一套简体中文界面。网站由 Next.js 静态导出，共享服务、案例与团队内容层。
+首页以中南大学人工智能协会为应用示例，包含协会介绍、四个部门、活动、项目与资源和加入指引。网站由 Next.js 静态导出。原企业服务、案例、团队与咨询模块也可直接访问和用于教学。
 
 ## 预览和部署
 
@@ -12,10 +12,12 @@
 
 ### 下载已构建的预览
 
-登录 GitHub，打开 [Actions](../../actions/workflows/verify.yml)，选择一次成功的运行，在底部 **Artifacts** 下载 `company-website-preview`。也可在该工作流页面点击 **Run workflow** 重新构建。ZIP 解压后，在包含 `index.html` 的目录运行 `npx --yes http-server . -a 127.0.0.1 -p 8080`，然后打开 `http://127.0.0.1:8080/`。
+登录 GitHub，打开 [Actions](../../actions/workflows/verify.yml)，选择一次成功的运行，在底部 **Artifacts** 下载 `company-website-preview`。也可在该工作流页面点击 **Run workflow** 重新构建。ZIP 解压后，在包含 `index.html` 的目录运行 `npx.cmd --yes http-server . -a 127.0.0.1 -p 8080`（Windows PowerShell）或 `npx --yes http-server . -a 127.0.0.1 -p 8080`（macOS / Linux），然后打开 `http://127.0.0.1:8080/`。
 
 | 模块 | 内容或界面入口 |
 | --- | --- |
+| 协会、四个部门及封面 | `src/data/association.ts`、`src/app/departments/`、`public/images/association/`（组织部沿用 `public/images/demo/hero.png`） |
+| 协会区块与页面样式 | `src/components/Association/`、`src/styles/association.css` |
 | 企业品牌、联系方式与 SEO | `src/data/about.ts`、`src/data/contactInfo.ts`、`src/lib/seo.ts` |
 | 服务模块、路由和导航 | `src/data/services.ts`、`src/data/routePages.ts`、`src/data/navigation.ts` |
 | 分类案例与详情 | `content/cases/`、`src/data/cases.ts` |
@@ -23,6 +25,6 @@
 | 常见问题和咨询 | `src/data/faq.ts`、`src/data/contactChannels.ts`、`public/demo-form.html` |
 | 首页图片和区块、服务侧边目录 | `public/images/demo/`、`src/components/Home/`、`src/app/services/[slug]/page.tsx` |
 
-完成一次练习可从添加示例案例开始，然后检查分类页、首页和咨询入口。首页照片为生成的教学素材，其他配图为示例图示。发布正式企业网站前换成自己的品牌、素材和咨询入口。
+协会开屏图为生成的场景示意。活动日期、地点和报名渠道待协会公开确认后填写。企业教学模块可通过 `/services/`、`/cases/`、`/teachers/`、`/faq/`、`/contact/` 继续访问。
 
 [项目日志](PROJECT_LOG.md)

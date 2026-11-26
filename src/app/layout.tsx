@@ -8,6 +8,7 @@ import {
   websiteJsonLd,
 } from "@/lib/seo";
 import "../styles/index.css";
+import "../styles/association.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -18,7 +19,6 @@ export const metadata: Metadata = {
   creator: siteConfig.companyName,
   publisher: siteConfig.companyName,
   category: "education",
-  icons: { icon: "/images/demo/brand.svg" },
   openGraph: {
     type: "website",
     locale: siteConfig.locale,
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: siteConfig.socialImage,
-        alt: `${siteConfig.name}｜把下一步想清楚`,
+        alt: siteConfig.name,
       },
     ],
   },
