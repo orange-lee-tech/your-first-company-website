@@ -14,7 +14,24 @@ jobs:
         with:
           node-version: 24
       - run: npm ci
-      - run: npm run build
+      - name: Generate and smoke-test local HTML preview
+        shell: bash
+        run: |
+          PORT=3100 npm run preview > /tmp/template-preview.log 2>&1 &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true; cat /tmp/template-preview.log' EXIT
+          for attempt in {1..120}; do
+            if curl -fsS http://127.0.0.1:3100/ -o /tmp/template-home.html; then
+              test -s out/index.html
+              grep -q '把下一步想清楚' /tmp/template-home.html
+              curl -fsS http://127.0.0.1:3100/services/baoyan/ -o /dev/null
+              curl -fsS http://127.0.0.1:3100/demo-form.html -o /dev/null
+              exit 0
+            fi
+            kill -0 "$preview_pid" 2>/dev/null || exit 1
+            sleep 1
+          done
+          exit 1
       - run: npm run verify:export
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e

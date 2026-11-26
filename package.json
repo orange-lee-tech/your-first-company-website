@@ -11,7 +11,8 @@
     "typecheck": "tsc --noEmit",
     "verify:export": "node scripts/verify-static-export.mjs",
     "test:serve": "node scripts/serve-static-export.mjs",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "preview": "npm run build && npm start"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.3",

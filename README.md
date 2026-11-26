@@ -4,7 +4,9 @@
 
 ## 预览和部署
 
-使用 Node.js 24 LTS。运行 `npm ci`、`npm run build`、`npm run verify:export`，再运行 `npm start` 并访问 `http://127.0.0.1:3000/`。虚构咨询表单只在浏览器中演示确认，不会发送表单数据。
+使用 Node.js 24。在仓库根目录首次运行 `npm ci`，之后运行 `npm run preview`。命令会静态导出 HTML 和资源到 `out/` 并启动本地服务。打开终端显示的 `http://127.0.0.1:3000/`。通过本地地址预览 `out/index.html`，可使用样式、图片和子页面。修改后按 `Ctrl+C` 停止，再运行预览命令。虚构咨询表单只在浏览器中演示确认。
+
+需要单独构建时运行 `npm run build`，验证导出可运行 `npm run verify:export`。
 
 设置 `NEXT_PUBLIC_SITE_URL` 为你的完整域名后重新构建。将 `out/` 交给静态站点服务器。Nginx 站点可用 `try_files $uri $uri/ =404;`，并设 `index index.html;`。使用域名根目录部署时留空 `NEXT_PUBLIC_SITE_BASE_PATH`。
 
